@@ -1,6 +1,5 @@
 package models;
 
-import javafx.geometry.Pos;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -77,6 +76,37 @@ public class PostTest {
         Post post = setNewPost();
         Post otherpost = setNewOtherPost();
         assertEquals(2, Post.findById(otherpost.getId()).getId());
+    }
+
+    @Test
+    public void updateChangesPostContent() throws Exception {
+        Post post = setNewPost();
+        String formerContent = post.getContent();
+        LocalDateTime formerDate = post.getCreatedAt();
+        int formerId = post.getId();
+
+        post.update("Android: day 40");
+
+        assertEquals(formerId, post.getId());
+        assertEquals(formerDate, post.getCreatedAt());
+        assertNotEquals(formerContent, post.getContent());
+    }
+
+    @Test
+    public void delete_deletesASpecificPost() throws Exception {
+        Post post = setNewPost();
+        Post otherPost = setNewOtherPost();
+        post.deletePost();
+        assertEquals(1, Post.getAll().size());
+        assertEquals(Post.getAll().get(0).getId(), 2);
+    }
+
+    @Test
+    public void delete_deletesAllPosts() {
+        Post post = setNewPost();
+        Post otherPost = setNewOtherPost();
+        post.clearAllPosts();
+        assertEquals(0, Post.getAll().size());
     }
 
     public static Post setNewPost() {

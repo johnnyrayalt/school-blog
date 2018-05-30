@@ -1,0 +1,24 @@
+{{#partial "content"}}
+
+    {{#if editPost}}
+        <h1>Edit this Post!</h1>
+        <form action="/posts/{{editPost.id}}/update" method="post">
+            <label for="content">Post Content</label>
+            <input type="text" id="content" name="content">
+
+
+    {{else}}
+        <h1>Add a new post!</h1>
+        <form action="/posts/new" method="post">
+            <label for="content">Post Content!</label>
+            <input type="text" name="content" id="content">
+
+    {{/if}}
+            <button type="submit" class="btn btn-default">Go!</button>
+        </form>
+
+        <a href="/posts/{{post.id}}/update">Edit this post!</a>
+        <a href="/posts/{{post.id}}/delete">DELETE this post (no undo)</a>
+{{/partial}}
+
+{{> layout.hbs}}
